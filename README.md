@@ -80,7 +80,7 @@ $currentMaster->getExchangeRates();
  *  'toCurrency' => 'USD',
  *  'convertExchangeRate' => '0.031690698779908',
  *  'convertedAmount' => '31.690698779908',
- *  'formattedConvertedAmount' => $currencySymbol . '$31.690698779908',
+ *  'formattedConvertedAmount' => '$31.690698779908',
  *  'currencySymbol' => '$'
  * ]
  */
@@ -113,12 +113,12 @@ The table below lists all the currency units supported by CurrencyMaster.
 | R               | ZAR           |
 | kr              | SEK           |
 | NZ$             | NZD           |
-| ฿              | THB           |
-| ₱              | PHP           |
+| ฿               | THB           |
+| ₱               | PHP           |
 | Rp              | IDR           |
-| €              | EUR           |
-| ₩              | KRW           |
-| ₫              | VND           |
+| €               | EUR           |
+| ₩               | KRW           |
+| ₫               | VND           |
 | RM              | MYR           |
 | ¥               | CNY           |
 
