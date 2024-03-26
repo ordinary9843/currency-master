@@ -41,8 +41,8 @@ class ExchangeRateHandler extends BaseHandler implements HandlerInterface
             return [
                 'fromCurrency' => $fromCurrency,
                 'toCurrency' => $toCurrency,
-                'convertExchangeRate' => (string)$convertExchangeRate,
-                'convertedAmount' => (string)$convertedAmount,
+                'convertExchangeRate' => $convertExchangeRate,
+                'convertedAmount' => $convertedAmount,
                 'formattedConvertedAmount' => $currencySymbol . $convertedAmount,
                 'currencySymbol' => $currencySymbol
             ];
@@ -63,9 +63,7 @@ class ExchangeRateHandler extends BaseHandler implements HandlerInterface
     private function calculateConvertExchangeRate(string $fromCurrency, string $toCurrency, string $exchangeRateType): string
     {
         $exchangeRates = $this->getSource()->fetch();
-        $fromExchangeRate = $exchangeRates[$fromCurrency];
-        $toExchangeRate = $exchangeRates[$toCurrency];
 
-        return bcdiv($fromExchangeRate[$exchangeRateType], $toExchangeRate[$exchangeRateType], 12) ?: '0';
+        return bcdiv($exchangeRates[$fromCurrency][$exchangeRateType], $exchangeRates[$toCurrency][$exchangeRateType], 12) ?: '0';
     }
 }
