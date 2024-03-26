@@ -78,9 +78,9 @@ $currentMaster->getExchangeRates();
  * Output: [
  *  'fromCurrency' => 'TWD',
  *  'toCurrency' => 'USD',
- *  'convertExchangeRate' => '0.031690698779908',
- *  'convertedAmount' => '31.690698779908',
- *  'formattedConvertedAmount' => '$31.690698779908',
+ *  'convertExchangeRate' => '0.031690698779',
+ *  'convertedAmount' => '31.690698779000',
+ *  'formattedConvertedAmount' => '$31.690698779000',
  *  'currencySymbol' => '$'
  * ]
  */
