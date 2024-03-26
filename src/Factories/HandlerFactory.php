@@ -14,7 +14,7 @@ class HandlerFactory
      * 
      * @return HandlerInterface
      * 
-     * @throws ClassNotFoundException
+     * @throws NotFoundException
      */
     public function create(string $type): HandlerInterface
     {
