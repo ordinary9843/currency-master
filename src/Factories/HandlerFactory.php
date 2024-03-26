@@ -20,7 +20,7 @@ class HandlerFactory
     {
         $class = 'Ordinary9843\\Handlers\\' . ucfirst($type) . 'Handler';
         if (!class_exists($class)) {
-            throw new NotFoundException('Classes class "' . $class . '" does not exist.', NotFoundException::CODE_CLASS);
+            throw new NotFoundException('Class "' . $class . '" does not exist.', NotFoundException::CODE_CLASS);
         }
 
         $sourceType = Config::getInstance()->getSourceType();
