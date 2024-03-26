@@ -26,8 +26,8 @@ class ExchangeRateHandler extends BaseHandler implements HandlerInterface
             $fromCurrency = $arguments['fromCurrency'];
             $toCurrency = $arguments['toCurrency'];
             $exchangeRateType = $arguments['exchangeRateType'];
-            $amount = (float)($arguments['amount']);
-            $customExchangeRate = !is_null($arguments['customExchangeRate']) ? (float)$arguments['customExchangeRate'] : null;
+            $amount = bcmul($arguments['amount'], '1', 12);
+            $customExchangeRate = !is_null($arguments['customExchangeRate']) ? bcmul($arguments['customExchangeRate'], '1', 12) : null;
             if (!isset(CurrencyConstant::CURRENCIES[$fromCurrency]) || !isset(CurrencyConstant::CURRENCIES[$toCurrency])) {
                 throw new HandlerException('The currency unit does not exist.', HandlerException::CODE_EXECUTE);
             } else if (!in_array($exchangeRateType, ExchangeRateTypeConstant::TYPES)) {
@@ -35,7 +35,7 @@ class ExchangeRateHandler extends BaseHandler implements HandlerInterface
             }
 
             $convertExchangeRate = (!is_null($customExchangeRate)) ? $customExchangeRate : $this->calculateConvertExchangeRate($fromCurrency, $toCurrency, $exchangeRateType);
-            $convertedAmount = $amount * $convertExchangeRate;
+            $convertedAmount = bcmul($amount, $convertExchangeRate, 12);
             $currencySymbol = CurrencyConstant::CURRENCIES[$toCurrency];
 
             return [
@@ -58,14 +58,14 @@ class ExchangeRateHandler extends BaseHandler implements HandlerInterface
      * @param string $toCurrency
      * @param string $exchangeRateType
      * 
-     * @return float
+     * @return string
      */
-    private function calculateConvertExchangeRate(string $fromCurrency, string $toCurrency, string $exchangeRateType): float
+    private function calculateConvertExchangeRate(string $fromCurrency, string $toCurrency, string $exchangeRateType): string
     {
         $exchangeRates = $this->getSource()->fetch();
         $fromExchangeRate = $exchangeRates[$fromCurrency];
         $toExchangeRate = $exchangeRates[$toCurrency];
 
-        return $fromExchangeRate[$exchangeRateType] > 0 && $toExchangeRate[$exchangeRateType] ? $fromExchangeRate[$exchangeRateType] / $toExchangeRate[$exchangeRateType] : 0;
+        return bcdiv($fromExchangeRate[$exchangeRateType], $toExchangeRate[$exchangeRateType], 12) ?: '0';
     }
 }

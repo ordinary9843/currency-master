@@ -59,9 +59,9 @@ class ExchangeRateHandlerTest extends BaseTestCase
         $this->assertEquals([
             'fromCurrency' => CurrencyConstant::TWD,
             'toCurrency' => CurrencyConstant::USD,
-            'convertExchangeRate' => '0.031690698779908',
-            'convertedAmount' => '31.690698779908',
-            'formattedConvertedAmount' => $currencySymbol . '31.690698779908',
+            'convertExchangeRate' => '0.031690698779',
+            'convertedAmount' => '31.690698779000',
+            'formattedConvertedAmount' => $currencySymbol . '31.690698779000',
             'currencySymbol' => $currencySymbol
         ], $exchangeRateHandler->execute(...[CurrencyConstant::TWD, CurrencyConstant::USD, ExchangeRateTypeConstant::CASH_BUY, 1000]));
     }
