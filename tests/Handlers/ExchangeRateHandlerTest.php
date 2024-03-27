@@ -54,7 +54,7 @@ class ExchangeRateHandlerTest extends BaseTestCase
                     'spotSell' => 32.03
                 ]
             ]);
-        $exchangeRateHandler = new ExchangeRateHandler($source);
+        $handler = new ExchangeRateHandler($source);
         $currencySymbol = CurrencyConstant::CURRENCIES[CurrencyConstant::USD];
         $this->assertEquals([
             'fromCurrency' => CurrencyConstant::TWD,
@@ -63,7 +63,7 @@ class ExchangeRateHandlerTest extends BaseTestCase
             'convertedAmount' => '31.690698779000',
             'formattedConvertedAmount' => $currencySymbol . '31.690698779000',
             'currencySymbol' => $currencySymbol
-        ], $exchangeRateHandler->execute(...[CurrencyConstant::TWD, CurrencyConstant::USD, ExchangeRateTypeConstant::CASH_BUY, 1000]));
+        ], $handler->execute(...[CurrencyConstant::TWD, CurrencyConstant::USD, ExchangeRateTypeConstant::CASH_BUY, 1000]));
     }
 
     /**
@@ -75,8 +75,8 @@ class ExchangeRateHandlerTest extends BaseTestCase
         $source = $this->createMock(SourceInterface::class);
         $source->method('fetch')
             ->willReturn([]);
-        $exchangeRateHandler = new ExchangeRateHandler($source);
-        $exchangeRateHandler->execute(...['test', CurrencyConstant::USD, ExchangeRateTypeConstant::CASH_BUY, 1000]);
+        $handler = new ExchangeRateHandler($source);
+        $handler->execute(...['test', CurrencyConstant::USD, ExchangeRateTypeConstant::CASH_BUY, 1000]);
     }
 
     /**
@@ -88,7 +88,7 @@ class ExchangeRateHandlerTest extends BaseTestCase
         $source = $this->createMock(SourceInterface::class);
         $source->method('fetch')
             ->willReturn([]);
-        $exchangeRateHandler = new ExchangeRateHandler($source);
-        $exchangeRateHandler->execute(...[CurrencyConstant::TWD, CurrencyConstant::USD, 'test', 1000]);
+        $handler = new ExchangeRateHandler($source);
+        $handler->execute(...[CurrencyConstant::TWD, CurrencyConstant::USD, 'test', 1000]);
     }
 }

@@ -16,10 +16,10 @@ class BaseHandlerTest extends BaseTestCase
     public function testExecuteShouldThrowHandlerException(): void
     {
         $source = $this->createMock(SourceInterface::class);
-        $baseHandler = new BaseHandler($source);
+        $handler = new BaseHandler($source);
         $this->expectException(HandlerException::class);
         $this->expectExceptionCode(HandlerException::CODE_EXECUTE);
-        $baseHandler->execute();
+        $handler->execute();
     }
 
     /**
@@ -28,9 +28,9 @@ class BaseHandlerTest extends BaseTestCase
     public function testSetSourceShouldEqualGetSource(): void
     {
         $source = $this->createMock(SourceInterface::class);
-        $baseHandler = new BaseHandler($source);
-        $baseHandler->setSource($source);
-        $this->assertEquals($source, $baseHandler->getSource());
+        $handler = new BaseHandler($source);
+        $handler->setSource($source);
+        $this->assertEquals($source, $handler->getSource());
     }
 
     /**
@@ -49,5 +49,26 @@ class BaseHandlerTest extends BaseTestCase
         $method->setAccessible(true);
         $method->invokeArgs($handler, [&$args]);
         $this->assertEquals(['arg1' => 1, 'arg2' => 2, 'arg3' => 3], $args);
+    }
+
+    /**
+     * @return void
+     */
+    public function testArgumentsMappingWhenProvidedInputs()
+    {
+        $source = $this->createMock(SourceInterface::class);
+        $handler = new BaseHandler($source);
+        $reflection = new ReflectionClass($handler);
+        $property = $reflection->getProperty('argumentsMapping');
+        $property->setAccessible(true);
+        $property->setValue($handler, ['arg1', 'arg2']);
+        $arguments = ['value1', 'value2'];
+        $method = $reflection->getMethod('mapArguments');
+        $method->setAccessible(true);
+        $method->invokeArgs($handler, [&$arguments]);
+        $this->assertEquals([
+            'arg1' => 'value1',
+            'arg2' => 'value2'
+        ], $arguments);
     }
 }

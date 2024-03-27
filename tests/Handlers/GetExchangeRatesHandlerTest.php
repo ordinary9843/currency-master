@@ -48,8 +48,8 @@ class GetExchangeRatesHandlerTest extends BaseTestCase
             ->willReturn($exchangeRates);
         $source->method('isCached')
             ->willReturn(false);
-        $getExchangeRatesHandler = new GetExchangeRatesHandler($source);
-        $this->assertEquals($exchangeRates, $getExchangeRatesHandler->execute());
+        $handler = new GetExchangeRatesHandler($source);
+        $this->assertEquals($exchangeRates, $handler->execute());
     }
 
     /**
@@ -73,8 +73,8 @@ class GetExchangeRatesHandlerTest extends BaseTestCase
             ->willReturn(true);
         $source->method('readCache')
             ->willReturn(json_encode($exchangeRates));
-        $getExchangeRatesHandler = new GetExchangeRatesHandler($source);
-        $this->assertEquals($exchangeRates, $getExchangeRatesHandler->execute());
+        $handler = new GetExchangeRatesHandler($source);
+        $this->assertEquals($exchangeRates, $handler->execute());
     }
 
     /**
@@ -90,7 +90,7 @@ class GetExchangeRatesHandlerTest extends BaseTestCase
         $botSource = new BotSource($client);
         $this->expectException(HandlerException::class);
         $this->expectExceptionCode(HandlerException::CODE_EXECUTE);
-        $getExchangeRatesHandler = new GetExchangeRatesHandler($botSource);
-        $getExchangeRatesHandler->execute();
+        $handler = new GetExchangeRatesHandler($botSource);
+        $handler->execute();
     }
 }
